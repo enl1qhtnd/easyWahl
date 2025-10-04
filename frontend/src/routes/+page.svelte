@@ -44,7 +44,7 @@
 
 			// Lade title
 			try {
-				const titleResponse = await fetch('http://localhost:8000/api/settings/vote-title');
+				const titleResponse = await fetch(`http://${window.location.hostname}:8000/api/settings/vote-title`);
 				if (titleResponse.ok) {
 					const titleData = await titleResponse.json();
 					voteTitle = titleData.title || 'made with ♥ by @enl1qhtnd';
