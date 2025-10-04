@@ -679,7 +679,23 @@ class AdminGUI(QMainWindow):
             if response.status_code == 200:
                 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
                 filename = f"abstimmung_ergebnisse_{timestamp}.xlsx"
-                filepath = Path.home() / "Downloads" / filename
+                
+                # Open file save dialog
+                from PyQt6.QtWidgets import QFileDialog
+                filepath, _ = QFileDialog.getSaveFileName(
+                    self,
+                    "Excel-Datei speichern",  # Dialog title
+                    str(Path.home() / "Downloads" / filename),  # Default path and filename
+                    "Excel Files (*.xlsx);;All Files (*)"  # File filters
+                )
+                
+                # Check if user cancelled the dialog
+                if not filepath:
+                    return
+                
+                # Ensure .xlsx extension
+                if not filepath.endswith('.xlsx'):
+                    filepath += '.xlsx'
 
                 with open(filepath, "wb") as f:
                     f.write(response.content)

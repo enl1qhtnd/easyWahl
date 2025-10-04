@@ -11,6 +11,7 @@ import uvicorn
 from datetime import datetime
 from openpyxl import Workbook
 import os
+import tempfile
 
 from database import Database
 from models import (
@@ -286,7 +287,10 @@ async def export_results():
     # Speichere Datei
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     filename = f"abstimmung_ergebnisse_{timestamp}.xlsx"
-    filepath = os.path.join("/tmp", filename)
+    
+    # Verwende temporäres Verzeichnis (Windows-kompatibel)
+    temp_dir = tempfile.gettempdir()
+    filepath = os.path.join(temp_dir, filename)
 
     wb.save(filepath)
 
