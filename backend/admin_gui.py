@@ -118,7 +118,7 @@ class AdminGUI(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("easyWahl - Admin Panel")
-        self.setGeometry(100, 100, 1400, 800)
+        self.setGeometry(100, 100, 700, 800)
 
         # Server-Status
         self.server_running = False
@@ -363,10 +363,10 @@ class AdminGUI(QMainWindow):
         export_btn.setMinimumHeight(45)
         h_layout.addWidget(export_btn)
 
-        slogan_btn = QPushButton("✏ Titel ändern")
-        slogan_btn.clicked.connect(self.change_slogan)
-        slogan_btn.setMinimumHeight(45)
-        h_layout.addWidget(slogan_btn)
+        title_btn = QPushButton("✏ Titel ändern")
+        title_btn.clicked.connect(self.change_title)
+        title_btn.setMinimumHeight(45)
+        h_layout.addWidget(title_btn)
 
         # Zentriere horizontal layout vertikal
         main_layout.addStretch()
@@ -692,39 +692,39 @@ class AdminGUI(QMainWindow):
             QMessageBox.critical(self, "Fehler",
                                f"Excel-Export fehlgeschlagen:\n{str(e)}\n\nServer muss laufen!")
 
-    def change_slogan(self):
-        """Ändert den Wahl-Slogan"""
+    def change_title(self):
+        """Ändert den Wahl-title"""
         try:
-            # Hole aktuellen Slogan
-            response = requests.get(f"{self.api_base}/api/settings/vote-slogan", timeout=2)
-            current_slogan = "Deine Stimme zählt!"
+            # Hole aktuellen title
+            response = requests.get(f"{self.api_base}/api/settings/vote-title", timeout=2)
+            current_title = "vote_title"
             if response.status_code == 200:
-                current_slogan = response.json().get("slogan", current_slogan)
+                current_title = response.json().get("title", current_title)
 
-            # Dialog für neuen Slogan
+            # Dialog für neuen title
             from PyQt6.QtWidgets import QInputDialog
-            new_slogan, ok = QInputDialog.getText(
+            new_title, ok = QInputDialog.getText(
                 self,
-                "Slogan ändern",
-                "Neuer Slogan für die Wahlseite:",
+                "Titel ändern",
+                "Neuer Titel für die Wahlseite:",
                 QLineEdit.EchoMode.Normal,
-                current_slogan
+                current_title
             )
 
-            if ok and new_slogan.strip():
-                # Setze neuen Slogan
+            if ok and new_title.strip():
+                # Setze neuen title
                 response = requests.post(
-                    f"{self.api_base}/api/settings/vote-slogan",
-                    params={"slogan": new_slogan.strip()},
+                    f"{self.api_base}/api/settings/vote-title",
+                    params={"title": new_title.strip()},
                     timeout=2
                 )
 
                 if response.status_code == 200:
-                    QMessageBox.information(self, "Erfolg", f"Slogan geändert zu:\n\"{new_slogan.strip()}\"")
+                    QMessageBox.information(self, "Erfolg", f"title geändert zu:\n\"{new_title.strip()}\"")
                 else:
-                    raise Exception("Slogan konnte nicht gesetzt werden")
+                    raise Exception("Titel konnte nicht gesetzt werden")
         except Exception as e:
-            QMessageBox.critical(self, "Fehler", f"Slogan-Änderung fehlgeschlagen:\n{str(e)}\n\nServer muss laufen!")
+            QMessageBox.critical(self, "Fehler", f"Titel-Änderung fehlgeschlagen:\n{str(e)}\n\nServer muss laufen!")
 
     def closeEvent(self, event):
         """Handler für Fenster-Schließen"""

@@ -230,21 +230,21 @@ async def get_server_status():
 
 # === SETTINGS-ENDPOINTS ===
 
-@app.get("/api/settings/vote-slogan", tags=["Settings"])
-async def get_vote_slogan():
-    """Gibt den aktuellen Wahl-Slogan zurück"""
-    slogan = db.get_setting("vote_slogan")
-    return {"slogan": slogan or "Deine Stimme zählt!"}
+@app.get("/api/settings/vote-title", tags=["Settings"])
+async def get_vote_title():
+    """Gibt den aktuellen Wahl-title zurück"""
+    title = db.get_setting("vote_title")
+    return {"title": title or "made with ♥ by @enl1qhtnd"}
 
 
-@app.post("/api/settings/vote-slogan", tags=["Settings"])
-async def set_vote_slogan(slogan: str):
-    """Setzt den Wahl-Slogan"""
-    if not slogan or len(slogan.strip()) == 0:
-        raise HTTPException(status_code=400, detail="Slogan darf nicht leer sein")
+@app.post("/api/settings/vote-title", tags=["Settings"])
+async def set_vote_title(title: str):
+    """Setzt den Wahl-title"""
+    if not title or len(title.strip()) == 0:
+        raise HTTPException(status_code=400, detail="Titel darf nicht leer sein")
 
-    db.set_setting("vote_slogan", slogan.strip())
-    return {"success": True, "slogan": slogan.strip()}
+    db.set_setting("vote_title", title.strip())
+    return {"success": True, "title": title.strip()}
 
 
 # === EXCEL-EXPORT ===

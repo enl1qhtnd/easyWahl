@@ -67,10 +67,10 @@ class Database:
                 )
             """)
 
-            # Setze Standard-Slogan falls nicht vorhanden
+            # Setze Standard-Titel falls nicht vorhanden
             cursor.execute(
                 "INSERT OR IGNORE INTO settings (key, value) VALUES (?, ?)",
-                ("vote_slogan", "Deine Stimme zählt!")
+                ("vote_title", "made with ♥ by @enl1qhtnd")
             )
 
             conn.commit()

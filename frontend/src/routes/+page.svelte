@@ -22,7 +22,7 @@
 	let selectedCandidate = null;
 	let isSubmitting = false;
 	let wsClient = null;
-	let voteSlogan = 'Deine Stimme zählt!';
+	let voteTitle = 'made with ♥ by @enl1qhtnd';
 
 	/**
 	 * Initialisierung beim Laden der Seite
@@ -42,15 +42,15 @@
 			const candidatesData = await getCandidates();
 			setCandidates(candidatesData);
 
-			// Lade Slogan
+			// Lade title
 			try {
-				const sloganResponse = await fetch('http://localhost:8000/api/settings/vote-slogan');
-				if (sloganResponse.ok) {
-					const sloganData = await sloganResponse.json();
-					voteSlogan = sloganData.slogan || 'Deine Stimme zählt!';
+				const titleResponse = await fetch('http://localhost:8000/api/settings/vote-title');
+				if (titleResponse.ok) {
+					const titleData = await titleResponse.json();
+					voteTitle = titleData.title || 'made with ♥ by @enl1qhtnd';
 				}
 			} catch (e) {
-				console.error('Slogan konnte nicht geladen werden:', e);
+				console.error('Title konnte nicht geladen werden:', e);
 			}
 
 			// WebSocket für Unlock-Event
@@ -127,7 +127,7 @@
 		<!-- Header -->
 		<div class="text-center mb-12">
 			<h1 class="text-5xl font-bold text-white mb-4">easyWahl</h1>
-			<p class="text-xl text-white opacity-90">{voteSlogan}</p>
+			<p class="text-xl text-white opacity-90">{voteTitle}</p>
 		</div>
 
 		<!-- Ladezustand -->
