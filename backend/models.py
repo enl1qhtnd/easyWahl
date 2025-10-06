@@ -36,13 +36,13 @@ class Candidate(BaseModel):
 
 class VoteRequest(BaseModel):
     """Model für eine Stimmabgabe"""
-    client_id: str = Field(..., min_length=1, max_length=500)
+    client_id: Optional[str] = Field(None, min_length=1, max_length=500)  # Optional, da IP-Adresse verwendet wird
     candidate_id: int = Field(..., gt=0)
 
 
 class VoteCheckRequest(BaseModel):
     """Model für die Prüfung ob ein Client bereits abgestimmt hat"""
-    client_id: str = Field(..., min_length=1, max_length=500)
+    client_id: Optional[str] = Field(None, min_length=1, max_length=500)  # Optional, da IP-Adresse verwendet wird
 
 
 class VoteCheckResponse(BaseModel):

@@ -239,8 +239,8 @@ class AdminGUI(QMainWindow):
         h_layout.addWidget(self.stop_btn)
 
         # Frontend Button
-        frontend_btn = QPushButton("🌐 Admin-Ergebnisse")
-        frontend_btn.clicked.connect(lambda: webbrowser.open("http://localhost:5173/admin-results"))
+        frontend_btn = QPushButton("🌐 Live-Ergebnisse")
+        frontend_btn.clicked.connect(lambda: webbrowser.open("http://localhost:5173/live"))
         frontend_btn.setMinimumHeight(40)
         frontend_btn.setMinimumWidth(180)
         h_layout.addWidget(frontend_btn)

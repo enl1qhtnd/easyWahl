@@ -3,7 +3,7 @@ FastAPI Server für das Poll-System
 Stellt REST-API und WebSocket-Endpoints bereit
 """
 
-from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from typing import List
@@ -112,12 +112,15 @@ async def delete_candidate(candidate_id: int):
 # === VOTING-ENDPOINTS ===
 
 @app.post("/api/vote", response_model=VoteResponse, tags=["Voting"])
-async def cast_vote(vote: VoteRequest):
+async def cast_vote(vote: VoteRequest, request: Request):
     """
     Gibt eine Stimme ab
     Jeder Client kann nur einmal pro Runde abstimmen
+    Verwendet IP-Adresse als Client-Identifier
     """
-    success = db.cast_vote(vote.client_id, vote.candidate_id)
+    # Extrahiere IP-Adresse aus dem Request
+    client_ip = request.client.host
+    success = db.cast_vote(client_ip, vote.candidate_id)
 
     if not success:
         return VoteResponse(
@@ -144,9 +147,11 @@ async def cast_vote(vote: VoteRequest):
 
 
 @app.post("/api/vote/check", response_model=VoteCheckResponse, tags=["Voting"])
-async def check_vote_status(request: VoteCheckRequest):
+async def check_vote_status(request: VoteCheckRequest, fastapi_request: Request):
     """Prüft ob ein Client bereits abgestimmt hat"""
-    has_voted = db.has_voted(request.client_id)
+    # Extrahiere IP-Adresse aus dem Request
+    client_ip = fastapi_request.client.host
+    has_voted = db.has_voted(client_ip)
     return VoteCheckResponse(has_voted=has_voted)
 
 

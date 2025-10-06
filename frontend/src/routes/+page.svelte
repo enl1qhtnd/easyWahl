@@ -7,7 +7,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { fade } from 'svelte/transition';
-	import { getCandidates, castVote, checkVoteStatus, getClientId, WebSocketClient } from '$lib/api';
+	import { getCandidates, castVote, checkVoteStatus, WebSocketClient } from '$lib/api';
 	import {
 		candidates,
 		setCandidates,
@@ -18,7 +18,6 @@
 		showNotification
 	} from '$lib/stores';
 
-	let clientId = '';
 	let selectedCandidate = null;
 	let isSubmitting = false;
 	let wsClient = null;
@@ -31,11 +30,8 @@
 		loading.set(true);
 
 		try {
-			// Hole Client-ID
-			clientId = getClientId();
-
 			// Prüfe Vote-Status
-			const voteStatus = await checkVoteStatus(clientId);
+			const voteStatus = await checkVoteStatus();
 			setVoteStatus(voteStatus.has_voted);
 
 			// Lade Kandidaten
@@ -98,7 +94,7 @@
 		isSubmitting = true;
 
 		try {
-			const response = await castVote(clientId, selectedCandidate.id);
+			const response = await castVote(null, selectedCandidate.id);
 
 			if (response.success) {
 				showNotification('Deine Stimme wurde erfolgreich registriert!', 'success');
@@ -106,10 +102,6 @@
 				// Setze Vote-Status sofort für Fade-Out/In-Animation
 				setVoteStatus(true, selectedCandidate.id);
 
-				// Weiterleitung zu Ergebnissen nach 2.5 Sekunden
-				setTimeout(() => {
-					goto('/results');
-				}, 2500);
 			} else {
 				setError(response.message);
 			}
