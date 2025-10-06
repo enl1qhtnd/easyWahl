@@ -266,14 +266,22 @@ async def export_results():
     # Sheet 1: Zusammenfassung
     ws_summary = wb.active
     ws_summary.title = "Zusammenfassung"
-    ws_summary.append(["Kandidat", "Beschreibung", "Stimmen"])
+    ws_summary.append(["Kandidat", "Beschreibung", "Stimmen", "Prozent"])
 
     results = db.get_results()
+    
+    # Berechne Gesamtstimmen für Prozentberechnung
+    total_votes = sum(result['vote_count'] for result in results)
+    
     for result in results:
+        # Berechne Prozentsatz (mit Schutz vor Division durch Null)
+        percentage = (result['vote_count'] / total_votes * 100) if total_votes > 0 else 0
+        
         ws_summary.append([
             result['candidate_name'],
             result.get('description', ''),
-            result['vote_count']
+            result['vote_count'],
+            f"{percentage:.2f}%"
         ])
 
     # Sheet 2: Detaillierte Votes
