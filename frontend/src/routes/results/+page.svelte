@@ -235,7 +235,7 @@
 		<div class="text-center mb-8">
 			<h1 class="text-5xl font-bold text-white mb-4">Live-Ergebnisse</h1>
 			<div class="bg-white bg-opacity-20 backdrop-blur-lg rounded-full px-8 py-3 inline-block">
-				<p class="text-2xl font-semibold text-white">
+				<p class="text-2xl font-semibold text-gray-800">
 					Gesamt: {$results.total_votes} Stimmen
 				</p>
 			</div>
