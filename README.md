@@ -57,6 +57,7 @@ easyWahl/
 - Python 3.10 oder höher
 - Node.js 18 oder höher
 - npm oder pnpm
+- Docker (für Frontend)
 
 ### Backend einrichten
 
@@ -86,16 +87,11 @@ Die API läuft dann auf: **http://localhost:8000**
 ### Frontend einrichten
 
 ```bash
-cd frontend
-
-# Dependencies installieren
-npm install
-
-# Development-Server starten
-npm run dev
+# Docker-Image bauen und Frontend starten
+docker compose up -d
 ```
 
-Das Frontend ist erreichbar unter: **http://localhost:5173**
+Das Frontend ist erreichbar unter: **http://localhost:9999**
 
 ## API-Dokumentation
 
@@ -129,15 +125,19 @@ Server kann im lokalen Netzwerk freigegeben werden:
 1. Backend startet standardmäßig auf `0.0.0.0:8000` (alle Interfaces)
 2. Frontend-Dev-Server mit `--host` Flag läuft ebenfalls auf allen Interfaces
 3. Clients im gleichen Netzwerk können zugreifen via:
-   - `http://<SERVER-IP>:5173` (Voting)
+   - `http://<SERVER-IP>:9999` (Voting)
    - `http://<SERVER-IP>:8000` (API)
 
-### Production-Build
+### Development
 
 ```bash
 cd frontend
-npm run build
-npm run preview
+
+# Dependencies installieren
+npm install
+
+# Development-Server starten
+npm run dev
 ```
 
 ### made with ❤️ by @enl1qhtnd
