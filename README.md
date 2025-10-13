@@ -62,31 +62,22 @@ easyWahl/
 ### Backend einrichten
 
 ```bash
-cd backend
+# Backend-Build herunterladen
+wget https://github.com/enl1qhtnd/easyWahl/releases/download/v1.1.0/easyWahl-v1.1.0.exe
 
-# Virtuelle Umgebung erstellen (empfohlen)
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# oder
-venv\Scripts\activate  # Windows
-
-# Dependencies installieren
-pip install -r requirements.txt
-
-# Admin-GUI starten
-python admin_gui.py
+# Backend starten
+./easyWahl-v1.1.0.exe
 ```
-
-Die Admin-GUI öffnet sich automatisch. Von dort aus kannst du:
-1. Den Server starten
-2. Kandidaten hinzufügen
-3. Live-Ergebnisse beobachten
 
 Die API läuft dann auf: **http://localhost:8000**
 
 ### Frontend einrichten
 
 ```bash
+# easyWahl-Repo herunterladen
+git clone https://github.com/enl1qhtnd/easyWahl.git
+cd easyWahl
+
 # Docker-Image bauen und Frontend starten
 docker compose up -d
 ```
@@ -128,7 +119,27 @@ Server kann im lokalen Netzwerk freigegeben werden:
    - `http://<SERVER-IP>:9999` (Voting)
    - `http://<SERVER-IP>:8000` (API)
 
-### Development
+## Building from source
+
+### Python Build (Backend)
+
+```bash
+cd backend
+
+# Virtuelle Umgebung erstellen (empfohlen)
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+# oder
+venv\Scripts\activate  # Windows
+
+# Dependencies installieren
+pip install -r requirements.txt
+
+# Admin-GUI starten
+python admin_gui.py
+```
+
+### Development (Frontend)
 
 ```bash
 cd frontend
@@ -139,5 +150,5 @@ npm install
 # Development-Server starten
 npm run dev
 ```
-
+#
 ### made with ❤️ by @enl1qhtnd
