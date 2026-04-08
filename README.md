@@ -52,41 +52,36 @@ easyWahl/
 
 ## Installation & Start
 
-### Voraussetzungen
+### Voraussetzungen (Dev)
 
 - Python 3.10 oder höher
 - Node.js 18 oder höher
 - npm oder pnpm
-- Docker (für Frontend)
 
-### Backend einrichten
+### Einrichtung
 
 ```bash
-# Backend-Build herunterladen
-wget https://github.com/enl1qhtnd/easyWahl/releases/download/v1.1.0/easyWahl-v1.1.0.exe
+# Exe-Build herunterladen
+wget https://github.com/enl1qhtnd/easyWahl/releases/download/v1.2/easyWahl-v1.2.exe
 
 # Backend starten
-./easyWahl-v1.1.0.exe
+./easyWahl-v1.2.exe
 ```
 
-Die API läuft dann auf: **http://localhost:8000**
+Der Server läuft dann auf: **http://localhost:8000**
 
-### Frontend einrichten
+## Deployment
 
-```bash
-# easyWahl-Repo herunterladen
-git clone https://github.com/enl1qhtnd/easyWahl.git
-cd easyWahl
+### Lokales Netzwerk
 
-# Docker-Image bauen und Frontend starten
-docker compose up -d
-```
+Server kann im lokalen Netzwerk freigegeben werden:
 
-Das Frontend ist erreichbar unter: **http://localhost:9999**
+1. Server startet standardmäßig auf `0.0.0.0:8000` (alle Interfaces)
+2. Clients im gleichen Netzwerk können zugreifen via:
+   - `http://<SERVER-IP>:8000` (API/Voting)
 
 ## API-Dokumentation
 
-Der Server bietet eine automatische API-Dokumentation:
 - **Swagger UI**: http://localhost:8000/docs
 - **ReDoc**: http://localhost:8000/redoc
 
@@ -107,21 +102,9 @@ Der Server bietet eine automatische API-Dokumentation:
 | `/ws` | WebSocket | Live-Updates |
 
 
-## Deployment
+## Source Development
 
-### Lokales Netzwerk
-
-Server kann im lokalen Netzwerk freigegeben werden:
-
-1. Backend startet standardmäßig auf `0.0.0.0:8000` (alle Interfaces)
-2. Frontend-Dev-Server mit `--host` Flag läuft ebenfalls auf allen Interfaces
-3. Clients im gleichen Netzwerk können zugreifen via:
-   - `http://<SERVER-IP>:9999` (Voting)
-   - `http://<SERVER-IP>:8000` (API)
-
-## Building from source
-
-### Python Build (Backend)
+### Development (Backend)
 
 ```bash
 cd backend
@@ -150,5 +133,6 @@ npm install
 # Development-Server starten
 npm run dev
 ```
+
 #
 ### made with ❤️ by @enl1qhtnd

@@ -7,7 +7,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { fade } from 'svelte/transition';
-	import { getCandidates, castVote, checkVoteStatus, WebSocketClient } from '$lib/api';
+	import { getApiUrl, getCandidates, castVote, checkVoteStatus, WebSocketClient } from '$lib/api';
 	import {
 		candidates,
 		setCandidates,
@@ -40,7 +40,7 @@
 
 			// Lade title
 			try {
-				const titleResponse = await fetch(`http://${window.location.hostname}:8000/api/settings/vote-title`);
+				const titleResponse = await fetch(getApiUrl('/api/settings/vote-title'));
 				if (titleResponse.ok) {
 					const titleData = await titleResponse.json();
 					voteTitle = titleData.title || 'made with ♥ by @enl1qhtnd';
@@ -139,12 +139,6 @@
 					<p class="text-lg text-gray-600 mb-6">
 						Du hast bereits abgestimmt. Du kannst nur einmal pro Runde abstimmen.
 					</p>
-					<button
-						on:click={() => goto('/results')}
-						class="bg-gradient-to-r from-[#f0f2f0] to-[#000c40] text-white px-8 py-3 rounded-lg font-semibold text-lg hover:opacity-90 transition-all transform hover:scale-105"
-					>
-						Ergebnisse ansehen
-					</button>
 				</div>
 			{/if}
 			{#if $candidates.length === 0 && !$hasVoted && !$loading}

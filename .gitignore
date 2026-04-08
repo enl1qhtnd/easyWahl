@@ -87,6 +87,7 @@ htmlcov/
 backend/__pycache__/
 backend/*.pyc
 backend/venv/
+backend/static/
 
 # Frontend specific
 frontend/node_modules/

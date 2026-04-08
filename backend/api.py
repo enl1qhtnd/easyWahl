@@ -11,7 +11,9 @@ import uvicorn
 from datetime import datetime
 from openpyxl import Workbook
 import os
+import sys
 import tempfile
+from pathlib import Path
 
 from database import Database
 from models import (
@@ -30,6 +32,17 @@ app = FastAPI(
     description="API für lokales Abstimmungssystem",
     version="1.0.0"
 )
+
+
+def get_runtime_dir() -> Path:
+    """Ermittelt das Laufzeitverzeichnis für normale und PyInstaller-Starts."""
+    if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+        return Path(sys._MEIPASS)
+    return Path(__file__).resolve().parent
+
+
+RUNTIME_DIR = get_runtime_dir()
+FRONTEND_DIR = RUNTIME_DIR / "static"
 
 # CORS aktivieren (erlaubt Frontend-Zugriff)
 app.add_middleware(
@@ -352,14 +365,71 @@ async def websocket_endpoint(websocket: WebSocket):
 
 # === HEALTH CHECK ===
 
-@app.get("/", tags=["System"])
-async def root():
+@app.get("/api/health", tags=["System"])
+async def health():
     """Health-Check Endpoint"""
     return {
         "status": "online",
         "service": "easyWahl Poll API",
         "version": "1.0.0"
     }
+
+
+def _is_inside_frontend_dir(path: Path) -> bool:
+    try:
+        path.relative_to(FRONTEND_DIR.resolve())
+        return True
+    except ValueError:
+        return False
+
+
+def get_frontend_response(requested_path: str = ""):
+    """Liefert statische Frontend-Dateien oder den SPA-Fallback aus."""
+    if not FRONTEND_DIR.exists():
+        return JSONResponse(
+            {
+                "status": "online",
+                "service": "easyWahl Poll API",
+                "version": "1.0.0",
+                "frontend": "not built"
+            }
+        )
+
+    normalized_path = requested_path.strip("/")
+    requested_file = Path(normalized_path)
+    candidates = []
+
+    if normalized_path:
+        candidates.append((FRONTEND_DIR / normalized_path).resolve())
+        if not requested_file.suffix:
+            candidates.append((FRONTEND_DIR / f"{normalized_path}.html").resolve())
+            candidates.append((FRONTEND_DIR / normalized_path / "index.html").resolve())
+
+    fallback_file = (FRONTEND_DIR / "index.html").resolve()
+
+    for candidate in candidates:
+        if _is_inside_frontend_dir(candidate) and candidate.is_file():
+            return FileResponse(candidate)
+
+    if requested_file.suffix:
+        raise HTTPException(status_code=404, detail="Datei nicht gefunden")
+
+    if fallback_file.is_file():
+        return FileResponse(fallback_file)
+
+    raise HTTPException(status_code=404, detail="Frontend nicht gefunden")
+
+
+@app.get("/", include_in_schema=False)
+async def frontend_root():
+    """Liefert die integrierte Frontend-App aus."""
+    return get_frontend_response()
+
+
+@app.get("/{full_path:path}", include_in_schema=False)
+async def frontend_routes(full_path: str):
+    """Liefert statische Assets oder den SPA-Fallback für Frontend-Routen aus."""
+    return get_frontend_response(full_path)
 
 
 # === SERVER-FUNKTION (für GUI) ===

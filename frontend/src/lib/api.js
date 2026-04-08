@@ -3,16 +3,38 @@
  * Alle REST-Endpoints und WebSocket-Verbindung
  */
 
-// Dynamische Hostname-Erkennung für LAN/Remote-Zugriff
-const getHostname = () => {
-	if (typeof window !== 'undefined') {
-		return window.location.hostname;
+function getApiBase() {
+	if (typeof window === 'undefined') {
+		return 'http://localhost:8000';
 	}
-	return 'localhost'; // Fallback für Server-Side Rendering
-};
 
-const API_BASE = `http://${getHostname()}:8000`;
-const WS_BASE = `ws://${getHostname()}:8000`;
+	const { protocol, hostname, origin, port } = window.location;
+	if (port === '8000' || port === '') {
+		return origin;
+	}
+
+	return `${protocol}//${hostname}:8000`;
+}
+
+function getWsBase() {
+	if (typeof window === 'undefined') {
+		return 'ws://localhost:8000';
+	}
+
+	const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+	if (window.location.port === '8000' || window.location.port === '') {
+		return `${wsProtocol}//${window.location.host}`;
+	}
+
+	return `${wsProtocol}//${window.location.hostname}:8000`;
+}
+
+export function getApiUrl(endpoint = '') {
+	return `${getApiBase()}${endpoint}`;
+}
+
+const API_BASE = getApiBase();
+const WS_BASE = getWsBase();
 
 /**
  * Generischer Fetch-Wrapper mit Error-Handling
