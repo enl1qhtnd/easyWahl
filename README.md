@@ -62,10 +62,10 @@ easyWahl/
 
 ```bash
 # Exe-Build herunterladen
-wget https://github.com/enl1qhtnd/easyWahl/releases/download/v1.2/easyWahl-v1.2.exe
+wget https://github.com/enl1qhtnd/easyWahl/releases/download/v1.2.0/easyWahl-v1.2.0.exe
 
 # Backend starten
-./easyWahl-v1.2.exe
+./easyWahl-v1.2.0.exe
 ```
 
 Der Server läuft dann auf: **http://localhost:8000**
