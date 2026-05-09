@@ -14,7 +14,7 @@ from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QPushButton, QLabel, QTableWidget, QTableWidgetItem, QTextEdit,
     QDialog, QLineEdit, QFormLayout, QMessageBox, QHeaderView,
-    QSplitter, QGroupBox, QFrame, QScrollArea
+    QSplitter, QGroupBox, QFrame, QScrollArea, QSizePolicy
 )
 from PyQt6.QtCore import Qt, QTimer, pyqtSignal, QThread
 from PyQt6.QtGui import QFont, QPalette, QColor, QIcon
@@ -119,6 +119,7 @@ class AdminGUI(QMainWindow):
         super().__init__()
         self.setWindowTitle("QuickPoll - Admin Panel")
         self.setGeometry(100, 100, 700, 800)
+        self.setMinimumSize(480, 380)
 
         # Server-Status
         self.server_running = False
@@ -195,7 +196,8 @@ class AdminGUI(QMainWindow):
                 border: none;
             }
         """)
-        header.setFixedHeight(80)
+        header.setMinimumHeight(55)
+        header.setMaximumHeight(80)
 
         layout = QHBoxLayout(header)
 
@@ -215,7 +217,9 @@ class AdminGUI(QMainWindow):
     def create_server_control(self):
         """Erstellt die Server-Steuerung"""
         group = QGroupBox("Server-Steuerung")
-        group.setFixedHeight(95)
+        group.setMinimumHeight(80)
+        group.setMaximumHeight(110)
+        group.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
 
         # Haupt-Layout (vertikal für Zentrierung)
         main_layout = QVBoxLayout()
@@ -268,7 +272,7 @@ class AdminGUI(QMainWindow):
         container_layout.setContentsMargins(0, 0, 0, 0)
         container_layout.setSpacing(0)
         panel = QGroupBox("Kandidaten-Verwaltung")
-        panel.setFixedHeight(500)
+        panel.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         layout = QVBoxLayout()
         layout.setContentsMargins(15, 20, 15, 15)
         layout.setSpacing(12)
@@ -338,7 +342,9 @@ class AdminGUI(QMainWindow):
     def create_admin_actions(self):
         """Erstellt Admin-Aktionen horizontal"""
         group = QGroupBox("Admin-Aktionen")
-        group.setFixedHeight(95)
+        group.setMinimumHeight(80)
+        group.setMaximumHeight(110)
+        group.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
 
         # Haupt-Layout (vertikal für Zentrierung)
         main_layout = QVBoxLayout()
