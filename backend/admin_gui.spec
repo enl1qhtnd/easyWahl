@@ -120,7 +120,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='easyWahl-v1.2.0',
+    name='QuickPoll-v1.2.0',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

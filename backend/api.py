@@ -28,7 +28,7 @@ from websocket_manager import WebSocketManager
 # === INITIALISIERUNG ===
 
 app = FastAPI(
-    title="easyWahl Poll API",
+    title="QuickPoll API",
     description="API für lokales Abstimmungssystem",
     version="1.0.0"
 )
@@ -370,7 +370,7 @@ async def health():
     """Health-Check Endpoint"""
     return {
         "status": "online",
-        "service": "easyWahl Poll API",
+        "service": "QuickPoll API",
         "version": "1.0.0"
     }
 
@@ -389,7 +389,7 @@ def get_frontend_response(requested_path: str = ""):
         return JSONResponse(
             {
                 "status": "online",
-                "service": "easyWahl Poll API",
+                "service": "QuickPoll API",
                 "version": "1.0.0",
                 "frontend": "not built"
             }

@@ -32,7 +32,7 @@ fi
   "$python_exe" -m PyInstaller --noconfirm admin_gui.spec
 )
 
-artifact_path="$backend_dir/dist/easyWahl-v1.2.0"
+artifact_path="$backend_dir/dist/QuickPoll-v1.2.0"
 if [[ -f "${artifact_path}.exe" ]]; then
   artifact_path="${artifact_path}.exe"
 fi

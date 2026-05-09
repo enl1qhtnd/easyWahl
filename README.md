@@ -1,4 +1,4 @@
-# easyWahl - Lokales Poll-Tool
+# QuickPoll - Lokales Poll-Tool
 
 Ein modernes, lokales Abstimmungssystem mit Python-Backend und Svelte-Frontend.
 
@@ -27,7 +27,7 @@ Ein modernes, lokales Abstimmungssystem mit Python-Backend und Svelte-Frontend.
 ## Projektstruktur
 
 ```
-easyWahl/
+QuickPoll/
 ├── backend/
 │   ├── admin_gui.py          # Tkinter Admin-Panel
 │   ├── api.py                # FastAPI Server
@@ -62,10 +62,10 @@ easyWahl/
 
 ```bash
 # Exe-Build herunterladen
-wget https://github.com/enl1qhtnd/easyWahl/releases/download/v1.2.0/easyWahl-v1.2.0.exe
+wget https://github.com/enl1qhtnd/QuickPoll/releases/download/v1.2.0/QuickPoll-v1.2.0.exe
 
 # Backend starten
-./easyWahl-v1.2.0.exe
+./QuickPoll-v1.2.0.exe
 ```
 
 Der Server läuft dann auf: **http://localhost:8000**

@@ -46,5 +46,5 @@ finally {
     Pop-Location
 }
 
-$exePath = Join-Path $backendDir 'dist\easyWahl-v1.2.0.exe'
+$exePath = Join-Path $backendDir 'dist\QuickPoll-v1.2.0.exe'
 Write-Host "Build abgeschlossen: $exePath"

@@ -109,7 +109,7 @@ export async function getResults() {
  * Kombiniert mit Browser-Fingerprint für zusätzliche Sicherheit
  */
 export function getClientId() {
-	const STORAGE_KEY = 'easywahl_client_id';
+	const STORAGE_KEY = 'quickpoll_client_id';
 
 	// Versuche existierende ID zu laden
 	let clientId = localStorage.getItem(STORAGE_KEY);

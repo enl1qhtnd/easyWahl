@@ -117,7 +117,7 @@ class AdminGUI(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("easyWahl - Admin Panel")
+        self.setWindowTitle("QuickPoll - Admin Panel")
         self.setGeometry(100, 100, 700, 800)
 
         # Server-Status
@@ -199,7 +199,7 @@ class AdminGUI(QMainWindow):
 
         layout = QHBoxLayout(header)
 
-        title = QLabel("easyWahl - Admin Panel")
+        title = QLabel("QuickPoll - Admin Panel")
         title.setStyleSheet("""
             QLabel {
                 color: white;
@@ -752,8 +752,8 @@ def main():
     app = QApplication(sys.argv)
 
     # Setze App-Metadaten
-    app.setApplicationName("easyWahl Admin")
-    app.setOrganizationName("easyWahl")
+    app.setApplicationName("QuickPoll Admin")
+    app.setOrganizationName("QuickPoll")
 
     # Erstelle und zeige Hauptfenster
     window = AdminGUI()

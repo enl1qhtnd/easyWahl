@@ -118,7 +118,7 @@
 	<div class="max-w-4xl mx-auto">
 		<!-- Header -->
 		<div class="text-center mb-12">
-			<h1 class="text-5xl font-bold text-white mb-4">easyWahl</h1>
+			<h1 class="text-5xl font-bold text-white mb-4">QuickPoll</h1>
 			<p class="text-xl text-white opacity-90">{voteTitle}</p>
 		</div>
 
